@@ -1,0 +1,153 @@
+<div style="display:none; justify-content: center; align-items: center; background-color:black; position: fixed; top: Opx; left: 0px; z-index: 9999; width: 100%; height: 100%;
+opacity: .65;" id="spinner">
+  <div class="la-ball-spin la-2x">
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+  </div>
+</div>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/"><img src="/image/logo/Samaan_Mart-removebg-cropped.png" alt="Samaan Mart"></a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mx-1 me-auto mb-2 mb-lg-0">
+        
+        <li class="nav-item mx-1 d-flex justify-content-center">
+          <a class="nav-link <%-location=='agent'?'active':''%>" aria-current="page" href="/agent">Home</a>
+        </li>
+        
+        <% let menu=["dashboard","products","orders","account"] %> 
+        <% for (let m of menu){ %> 
+          <li class="nav-item mx-1 d-flex justify-content-center">
+            <a class="nav-link <%-location==m?'active':''%> <%-!agent?' disabled':''%>" style="max-width:fit-content;" aria-current="page" href="/agent-<%=m%>"><%=m%></a>
+          </li>
+        <%}%>
+      </ul>
+      
+      <div class="d-flex justify-content-center"> <%if(!agent){ %>   
+        <a class="btn btn-outline-success" style="margin-right: 10px;" aria-current="page" href="#login" data-bs-toggle="modal">Login</a>
+        <a class="btn btn-outline-success" href="/agent-signup">Sign Up</a>
+      <% }else{ %> 
+        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Hi, <%=agent.name %> </a>
+        <a class="logout-btn btn btn-outline-success" style="margin-right: 10px;">Logout</a> 
+      <% } %> </div> 
+      
+    </div>
+  </div>
+</nav>
+
+<!-- 
+<nav class="navbar navbar-expand-lg navbar-light bg-light my-2" style="background-color: white !important;">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#"><img src="/image/logo/Samaan_Mart-removebg-cropped.png" alt="Samaan Mart"></a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="/agent">Home</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link<%=!agent?' disabled':''%>" href="/" <%-!agent? "tabindex='-1' aria-disabled='true'":""%>>Dashboard</a>
+        </li>
+        
+        <li class="nav-item">
+          <a class="nav-link <%=!agent?' disabled':''%>" href="/agent-products" <%-!agent? "tabindex='-1' aria-disabled='true'":""%>>Products</a>
+        </li>
+        
+        <li class="nav-item">
+          <a class="nav-link <%=!agent?' disabled':''%>" href="#" <%-!agent? "tabindex='-1' aria-disabled='true'":""%>>Ratings</a>
+        </li>
+        
+        <li class="nav-item">
+          <a class="nav-link <%=!agent?' disabled':''%>" href="/agent-account" <%-!agent? "tabindex='-1' aria-disabled='true'":""%>>Me</a>
+        </li>
+        
+
+      </ul>
+      <%if(!agent){ %>   
+        <a class="btn btn-outline-success" style="margin-right: 10px;" aria-current="page" href="#login" data-bs-toggle="modal">Login</a>
+        <a class="btn btn-outline-success" href="/agent-signup">SignUp</a>
+      <% }else{ %> 
+        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Hi, <%=agent.name %> </a>
+        <a class="logout-btn btn btn-outline-success" style="margin-right: 10px;">Logout</a> 
+      <% } %> 
+    </div>
+  </div>
+</nav> -->
+
+<section class="log" style="margin-top: 0px;">
+  <div class="modal fade" id="login" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1" >
+    <div class="modal-dialog modal-dialog-centered rounded-0" style="max-width: 400px;">
+      <div class="modal-content" style="border-radius: 10px;">
+        <div class="container h-100 mt-3 mb-3">
+          <div class="d-flex justify-content-center h-100">
+            <div class="user_card">
+              <div class="d-flex justify-content-center">
+                <div class="brand_logo_container">
+                  <img src="/image/logo/Samaan_Mart-removebg-cropped.png" class="brand_logo" alt="Logo" style="width: 150px; margin-bottom: 10px;">
+                </div>
+              </div>
+              <div class="d-flex justify-content-center form_container">
+                <form class="form1">
+                  <div class="input-group mb-3">
+                      <span class="input-group-text"><i class="fa fa-envelope"></i></span>
+                    <input type="text" id="email" name="Email1" class="form-control input_user" required value="" placeholder="Username">
+                  </div>
+                  <div class="input-group mb-2">
+                    <span class="input-group-text"><i class="fa fa-key"></i></span>
+                    <input type="password" id="password" name="Password1" class="form-control input_pass" required value="" placeholder="Password">
+                  </div>
+                  <div class="d-flex justify-content-center mt-3 login_container">
+                    <button type="submit" name="button" class="btn login_btn btn-block w-100" style="background: #d4d4d4;">Login</button>
+                  </div>
+                </form>
+              </div>
+          
+              <div class="d-flex justify-content-center user-select-none m-4">
+                Don't have an account? <a class="mx-2" style="text-decoration: none;" href="/agent-signup">Sign Up</a><br>
+              </div>
+              
+            </div>
+          </div>
+        </div>
+
+      <!-- <div class="modal-header border-0">
+          <h3>Log IN</h3>
+          <button type="button" class="btn-close  " style="margin-top: -48px;" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div>
+            <form class="px-4 py-3 form1">
+              <div class="mb-3">
+                <label for="exampleDropdownFormEmail1" class="form-label label">Email address</label>
+                <input type="email" class="form-control inp" id="email" name="Email1" placeholder="Enter your email">
+              </div>
+              <div class="mb-3 mt-5">
+                <label for="exampleDropdownFormPassword1" class="form-label label">Password</label>
+                <input type="password" class="form-control inp" id="password" name="Password1" placeholder="Enter your password">
+              </div>
+              <div class="text-center  mt-5">
+                <button class="button">LOGIN</button>
+              </div>
+            </form>
+            
+            <div class="modal-body" style="text-align: right; ">
+              <a class="right" href="/agent-signup">New around here? Sign up</a><br>
+            </div>
+          </div>
+        </div>-->
+      </div> 
+    </div>
+  </div>
+</section>

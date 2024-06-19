@@ -1,0 +1,255 @@
+<div style="display:none; justify-content: center; align-items: center; background-color:black; position: fixed; top: Opx; left: 0px; z-index: 9999; width: 100%; height: 100%;
+opacity: .65;" id="spinner">
+  <div class="la-ball-spin la-2x">
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+  </div>
+</div>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="/"><img src="/image/logo/Samaan_Mart-removebg-cropped.png" alt="Samaan Mart"></a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mx-1 me-auto mb-2 mb-lg-0">
+          <% let menu=["home","shop"] %> 
+          <% for (let m of menu){ %> 
+            <li class="nav-item mx-1 d-flex justify-content-center">
+              <a class="nav-link <%-location==m?'active':''%>" style="max-width:fit-content;" aria-current="page" href="<%-m=='home'?'/':'/'+m%>"><%=m%></a>
+            </li>
+          <%}%>
+          <% menu=["cart","orders","account"] %> 
+          <% for (let m of menu){ %> 
+            <li class="nav-item mx-1 d-flex justify-content-center">
+              <a class="nav-link <%-location==m?'active':''%> <%-!user?' disabled':''%>"" style="max-width:fit-content;" aria-current="page" href="<%-m=='home'?'/':'/'+m%>"><%=m%></a>
+            </li>
+          <%}%>
+        </ul>
+        
+        <div class="d-flex justify-content-center"> <%if(!user){ %>
+          <a class="btn btn-outline-success" style="margin-right: 10px;" href="/agent">Become a Seller</a>
+          <a class="btn btn-outline-success" aria-current="page" href="#login" data-bs-toggle="modal">Login</a>
+        <% }else{ %> 
+          <a class="nav-link" href="/account" style="text-transform: capitalize;cursor: pointer;color: black;">Hi, <%=user.name %> </a>
+          <a class="logout-btn btn btn-outline-success" style="margin-right: 10px;">Logout</a>
+        <% } %></div> 
+      </div>
+    </div>
+  </nav>
+
+  <section class="log" style="margin-top: 0px;">
+
+    <div class="modal fade" id="login" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1" >
+      <div class="modal-dialog modal-dialog-centered rounded-0" style="max-width: 400px;">
+        <div class="modal-content" style="border-radius: 10px;">
+          
+          <div class="container h-100 mt-3 mb-3">
+            <div class="d-flex justify-content-center h-100">
+              <div class="user_card">
+                <div class="d-flex justify-content-center">
+                  <div class="brand_logo_container">
+                    <img src="/image/logo/Samaan_Mart-removebg-cropped.png" class="brand_logo" alt="Logo" style="width: 150px; margin-bottom: 10px;">
+                  </div>
+                </div>
+                <div class="d-flex justify-content-center form_container">
+                  <form class="form">
+                    <div class="input-group mb-3">
+                        <span class="input-group-text"><i class="fa fa-envelope"></i></span>
+                      <input type="text" id="email" name="Email1" class="form-control input_user" required value="" placeholder="Email">
+                    </div>
+                    <div class="input-group mb-2">
+                      <span class="input-group-text"><i class="fa fa-key"></i></span>
+                      <input type="password" id="password" name="Password1" class="form-control input_pass" required value="" placeholder="Password">
+                    </div>
+                    <div class="d-flex justify-content-center mt-3 login_container">
+                      <button type="submit" name="button" class="btn login_btn btn-block w-100" style="background: #f0f0f0;">Login</button>
+                    </div>
+                  </form>
+                </div>
+            
+                <div class="mt-4">
+                  <div class="d-flex justify-content-center user-select-none">
+                    Don't have an account? <a data-bs-target="#signup" data-bs-toggle="modal" data-bs-dismiss="modal" class="mx-2" style="text-decoration: none; cursor: pointer;">Sign Up</a>
+                  </div>
+                  <div class="d-flex justify-content-center user-select-none">
+                    <a data-bs-target="#forget" data-bs-toggle="modal" data-bs-dismiss="modal" class="mx-2" style="text-decoration: none; cursor: pointer;">Forgot Password</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        
+        </div>
+      </div>
+    </div>
+    
+    <!-- <div class="modal-header border-0">
+                <h3>Log IN</h3>
+                <button type="button" class="btn-close  " style="margin-top: -48px;" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                  <div>
+                      <form class="px-4 py-3 form">
+                        <div class="mb-3">
+                          <label for="exampleDropdownFormEmail1" class="form-label label">Email address</label>
+                          <input type="email" class="form-control inp" id="email" name="Email1" placeholder="Enter your email">
+                        </div>
+                        <div class="mb-3 mt-5">
+                          <label for="exampleDropdownFormPassword1" class="form-label label">Password</label>
+                          <input type="password" class="form-control inp" id="password" name="Password1" placeholder="Enter your password">
+                        </div>
+                        <div class="text-center  mt-5">
+                          <button class="button">LOGIN</button>
+                        </div>
+                      </form>
+                      
+                      <div class="modal-body" style="text-align: right; ">
+                        <a class="right" data-bs-target="#signup" data-bs-toggle="modal" data-bs-dismiss="modal">New around here? Sign up</a><br>
+                        <a class="right" style="text-align: right;" data-bs-target="#forget" data-bs-toggle="modal" data-bs-dismiss="modal">Forgot password?</a>
+                      </div>
+                    </div>
+              </div> -->
+
+
+    <div class="modal fade" id="signup" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
+      <div class="modal-dialog modal-dialog-centered rounded-0" style="max-width: 400px;">
+        <div class="modal-content" style="border-radius: 10px;">
+        
+          <div class="container h-100 mt-3 mb-3">
+            <div class="d-flex justify-content-center h-100">
+              <div class="user_card">
+                <div class="d-flex justify-content-center">
+                  <div class="brand_logo_container">
+                    <img src="/image/logo/Samaan_Mart-removebg-cropped.png" class="brand_logo" alt="Logo" style="width: 150px; margin-bottom: 10px;">
+                  </div>
+                </div>
+                <div class="d-flex justify-content-center form_container">
+                  <form class="form-sign">
+                    
+                    <div class="input-group mb-3">
+                        <span class="input-group-text"><i class="fa fa-user"></i></span>
+                      <input type="text" id="sname" name="Name1" class="form-control input_user" value="" required placeholder="Name">
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text"><i class="fa fa-envelope"></i></span>
+                      <input type="text" id="semail" name="Email1" class="form-control input_user" value="" required placeholder="Email">
+                    </div>
+                    <div class="input-group mb-2">
+                      <span class="input-group-text"><i class="fa fa-key"></i></span>
+                      <input type="password" id="spassword" name="Password1" class="form-control input_pass" value="" required placeholder="Password">
+                    </div>
+                    <div class="d-flex justify-content-center mt-3 login_container">
+                      <button type="submit" name="button" class="btn login_btn btn-block w-100" style="background: #f0f0f0;">Sign Up</button>
+                    </div>
+                  </form>
+                </div>
+          
+                <div class="mt-4 d-flex justify-content-center user-select-none ">
+                  Already a member? <a data-bs-target="#login" data-bs-toggle="modal" data-bs-dismiss="modal" class="mx-2" style="text-decoration: none; cursor: pointer;">Login</a><br>
+                </div>
+              </div>
+            </div>
+          </div>
+        
+        </div>
+      </div>
+    </div> 
+      
+              
+<!-- 
+          <div class="modal-header border-0">
+            <h3>Sign UP</h3>
+            <button type="button" class="btn-close  " style="margin-top: -48px;" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            
+            <form class="px-4 py-3 form-sign">
+              <div class="mb-3">
+                <label for="exampleDropdownName1" class="form-label label">Name</label>
+                <input type="text" class="form-control inp" required id="sname" name="Name" placeholder="Enter your name">
+              </div>
+              <div class="mb-3 mt-4">
+                <label for="exampleDropdownFormEmail1" class="form-label label">Email address</label>
+                <input type="email" class="form-control inp" required id="semail" name="Email" placeholder="Enter your email">
+              </div>
+              <div class="mb-3 mt-4">
+                <label for="exampleDropdownFormPassword1" class="form-label label">Password</label>
+                <input type="password" class="form-control inp" required id="spassword" name="Password" placeholder="Enter your password">
+              </div>
+              <div class="text-center  mt-4">
+                <button class="button">SIGNUP</button>
+              </div>
+              <div class="modal-body mt-4" style="text-align: right; ">
+                <a class="right" data-bs-target="#login" data-bs-toggle="modal" data-bs-dismiss="modal">Already a member? Log in</a><br>
+              </div>
+            </form>
+          </div>-->
+
+
+    <div class="modal fade" id="forget" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
+      <div class="modal-dialog modal-dialog-centered rounded-0" style="max-width: 400px;">
+        <div class="modal-content" style="border-radius: 10px;">
+          
+          <div class="container h-100 mt-3 mb-3">
+            <div class="d-flex justify-content-center h-100">
+              <div class="user_card">
+                <div class="d-flex justify-content-center mb-2">
+                  <div class="brand_logo_container">
+                    <img src="/image/logo/Samaan_Mart-removebg-cropped.png" class="brand_logo" alt="Logo" style="width: 150px; margin-bottom: 10px;">
+                  </div>
+                </div>
+                <div class="d-flex justify-content-center form_container">
+                  <form class="form-forget">
+                    <div class="input-group mb-3">
+                        <span class="input-group-text"><i class="fa fa-envelope"></i></span>
+                      <input type="text" id="femail" name="Email1" class="form-control input_user" required value="" placeholder="Email">
+                    </div>
+                    
+                    <div class="d-flex justify-content-center mt-3 login_container">
+                      <button type="submit" name="button" class="btn login_btn btn-block w-100" style="background: #f0f0f0;">Forgot Password</button>
+                    </div>
+                  </form>
+                </div>
+      
+                <div class="d-flex justify-content-center user-select-none mt-4" >
+                  <a data-bs-target="#login" data-bs-toggle="modal" data-bs-dismiss="modal" style="text-decoration: none; cursor: pointer;" class="mx-2">Back to Login</a><br>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+
+              <!-- <div class="modal-header border-0">
+                <h3>Forget Password</h3>
+                <button type="button" class="btn-close  " style="margin-top: -48px;" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                
+                <form class="px-4 py-3 form-forget">
+                  <div class="mb-3 mt-4">
+                    <label for="exampleDropdownFormEmail1" class="form-label label">Email address</label>
+                    <input type="email" class="form-control inp" required id="femail" name="Email" placeholder="Enter your email">
+                  </div>
+                  <div class="text-center  mt-4">
+                    <button type="submit" class="button">Forget Password</button>
+                  </div>
+                  <div class="modal-body mt-4" style="text-align: right; ">
+                    <a class="right" data-bs-target="#login" data-bs-toggle="modal" data-bs-dismiss="modal">Back to Log in</a><br>
+                  </div>
+                </form>
+              </div> -->
+            

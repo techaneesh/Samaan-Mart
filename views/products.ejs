@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<%- include('partials/head') %> 
+<body style="background-color:white">
+    <%- include('partials_agent/navbar',{location:"products"}) %>  
+
+    <div class="navbar navbar-expand-lg navbar-light bg-none mx-2">
+        <div class="container col-lg-9 col-md-12 col-sm-12 p-4" style="border-radius: 5vmin;  color: white; background-color:#212529">
+          <table class="table text-center table-bordered table-dark table-hover"id="userData">
+            <thead>
+              <tr> 
+                <th>
+                  Sort
+                </th>
+                <th>
+                  <select name="sort1" id="sort1" required class="inp"> 
+                    <% for(let s of ['name','price','quantity']){ %> 
+                    <option value=<%=s%> <%-query.sort ?query.sort.includes('-')?query.sort.slice(1)==s?'selected':'':query.sort==s?'selected':'':''%>><%-(s && s[0].toUpperCase() + s.slice(1)) || ""%></option>
+                    <% } %> 
+                </select>
+                </th>
+                <th>
+                  <select name="sort2" id="sort2" required class="inp"> 
+                    <option value="">Ascending</option>
+                    <option value="-" <%-query.sort ?query.sort.includes('-')?'selected':'':''%>>Descending</option>
+                  </select>
+                </th>
+                <th></th>
+                <th colspan="2">
+                  <input type="hidden" id="condi" value="<%-query.name?query.name.regex:''%>">
+                  <input type="text" value="<%-query.name?query.name.regex:''%>" class="form-control inp" style="background-color: #212529;" placeholder="Search" name="searchv" id="searchv">
+                </th>
+                <th>
+                  <button type="button" id="search" class="w-100 mt-1.7 btn btn-dark btn-sm search">
+                    <i class="fa fa-search"></i>
+                  </button>
+                </th>
+              </tr>
+      
+                <tr style="height: 30px; vertical-align: middle">
+                    <th scope="col">#</th>
+                    <th scope="col">Category</th>
+                    <th scope="col">Product Image</th>
+                    <th scope="col">Product Name</th>
+                    <th scope="col">Product Description</th>
+                    <th scope="col">Unit Price</th>
+
+                    <th scope="col">Quantity</th>
+                </tr>
+            </thead>
+            <tbody>
+              <% let i=1; %> 
+              <% for(let product of Products){ %> 
+                <tr onclick="fill('<%=product.id%>','<%=product.name%>','<%=product.description%>','<%=product.price%>','<%=product.quantity%>','<%=product.category%>');" data-bs-target="#updatep" data-bs-toggle="modal" data-bs-dismiss="modal" style="cursor: pointer;">
+                  <th scope="row"><span class="no"><%=i %> </span></th>
+                  
+                  <td style="text-transform: capitalize;"><%=product.category %> </td>
+                  
+                  <td><img src="/image/products/<%=product.images[0]%>" style="width: 100px;height: 100px;"></td>
+                  <td><%=product.name %></td>
+                  <td><%=product.description %></td>
+                  
+                  <td>₹<%=product.price %></td>
+                  <td><%=product.quantity %></td>
+                    <% i++; %> 
+                </tr>
+                <% } %> 
+              </tbody>
+            </table>
+          </div>   
+        </div>
+    <div class="text-center">
+      <input
+      type="button"
+      class="btn btn-success mx-5"
+      value="Add Product"
+      onclick="location.href='/add-product'"
+      />
+    </div>
+      
+
+    <div class="modal fade" id="updatep" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
+      <div class="modal-dialog modal-dialog-centered rounded-0" style="max-width: 700px;">
+        <div class="modal-content" style="border-radius: 10px;">
+          <div class="modal-header border-0">
+            <h3>Update Product</h3>
+            <button type="button" class="btn-close  " style="margin-top: -48px;" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form class="form--updateproduct" style="display: inline !important;">
+            <div class="mb-3 row">
+                                
+              <div class="col-sm-5">
+                  <label class="form-label label">Name</label>
+                  <input type="hidden" name="pid" id="pid">
+                  <input type="text" class="form-control inp" required id="name" name="Name" placeholder="Product Name"> 
+              </div>
+              
+              <div class="col-sm-6">
+                  <label class="form-label label">Description</label>
+                  <input type="text" class="form-control inp" required id="description" name="description" placeholder="Product Description">
+              </div>
+
+            </div>
+
+            <div class="mb-3 mt-4 row">
+              <div class="col-sm-5">
+                  <% const cate=["Automobile & Tyres","Books","Clothes","Computer Accessories","Cosmetics","Dairy","Decoration","Electronics","Fashin Accessories","Furniture","Gym Equipments","Media","Others"] %> 
+                  <label class="form-label" for="category">Select Category </label>                                    
+                  <select name="category" id="category" required class="form-control inp" size="5"> 
+                      <% for (var j = 0; j < cate.length; j++) { %>
+                          <option value="<%=cate[j]%>"><%=cate[j]%></option>
+                      <% } %> 
+                          
+                  </select>
+              </div>
+              <div class="col-sm-6 row">
+                  <div class="col-sm-6">
+                      <label class="form-label label mt-2">Price</label>
+                      <input type="text" class="form-control inp" required id="price" name="price" placeholder="RS.">
+                  </div>
+                  <div class="col-sm-6">
+                      <label class="form-label label mt-2">Quantity</label>
+                      <input type="text" class="form-control inp" required id="quantity" name="quantity" >
+                  </div>
+                  <div class="mt-4">
+                      <label for="aphoto" class="mb-2">Set Product Photo</label>
+                      <input type="file" accept="image/*" class="form-control inp" multiple id="photos" name="photos">
+                  </div>
+              </div>
+            </div>
+
+            <div class="mt-5 text-center">
+              <button class="col-sm-3 btn btn-outline-success" >Update</button>
+              </form>
+              <form class="form--deleteproduct" style="display: inline !important;">
+                <button class="col-sm-3 btn btn-outline-danger">Delete</button>
+              </div>
+            </form>
+  
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <footer>
+      <%- include('partials/footer') %>
+  </footer>   
+       
+  <script>
+      
+    function fill(pid, pname, pdes, pprice, pquantity, pcategory){
+      // console.log(pid);
+      document.getElementById("pid").value=pid;
+      document.getElementById("name").value=pname;
+      document.getElementById("description").value=pdes;
+      document.getElementById("category").value=pcategory;
+      document.getElementById("price").value=pprice;
+      document.getElementById("quantity").value=pquantity;
+    }
+  </script>
+</body>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<%- include('partials/head') %> 
+<body style="background-color: white">
+    <%- include('partials/navbar',{location:"shop"}) %>     
+    <div class="container col-lg-8 col-md-12 col-sm-12 mb-5 mt-4">
+      
+      <h1 id="featured-stores-heading" class="mt-4 mb-3">Shops NearBy</h1>
+          
+      <div class="container-fluid mb-4">
+        <div class="d-flex">
+          <input type="hidden" id="checkfshop" value="<%-query.shop?query.shop.regex:''%>">
+          
+          <input class="form-control me-2" id="valuefshop" type="search" placeholder="Search" aria-label="Search" value="<%-query.shop?query.shop.regex:''%>">
+          <button class="btn btn-outline-success"id="searchfshop" type="submit">Search</button>
+        </div>
+      </div>
+          
+      <div class="row">
+        
+        <%let count=0;for(let agent of Agents){ count=count+1; %>
+      
+        <div class="col-sm-4 col-xl-4 mb-4 ms-0">
+          <!-- card body -->
+            <div class="card h-100" onclick="location.href='/shop/<%=agent._id%>'" style="border-radius: 20px; box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;cursor: pointer;">
+            
+                <div class="img text-center d-block mt-2" style="height: 150px;">
+                  <img src="/image/agents/<%=agent.photo %>" class="card-img-top p-2" style="width: 234px;height: 160px;" alt="Store Image"><br>
+                </div>
+                <div class="card-body d-flex justify-content-center align-items-center">
+                  <h4 class="card-title text-center" style="font-size: 105%;"><%=agent.shop %></h4>
+                </div>                
+              
+            </div>
+        </div>
+        <% } %>  
+      </div>
+    </div>
+    
+    <% if(count==0){ %>        
+    
+      <div class="container col-lg-8 col-md-12 col-sm-12 mb-5 mt-4">
+        <div class="d-flex flex-column text-center" style="width: 100%;height:25vh;line-height: 65vh;text-align: center;">
+          <span style="font-size: 4.2vh;display: inline-block;vertical-align: middle;line-height: normal;">No shops available!</span>
+         
+        </div>
+      </div>
+    
+    <%} %> 
+
+    <footer>
+        <%- include('partials/footer') %>
+    </footer>   
+
+    <input type="hidden" id="proId">
+    <script>
+    
+    function fill(proId){
+      document.getElementById("proId").value=proId;
+    }
+    
+    </script>
+
+</body>
+</html>

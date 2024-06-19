@@ -1,0 +1,134 @@
+
+<!DOCTYPE html>
+<%- include('partials/head') %> 
+
+<body>
+  <!-- ------------ navbar ------------- -->
+  <%- include('partials/navbar',{location:"shop"})%> 
+  <div class="container col-lg-9 col-md-12 col-sm-12 mt-4">
+        
+    <div class="d-flex justify-content-center pb-2" style="border-bottom: 1px solid black;">
+      <h1 class="mx-4 text-center"><%=product.name%> </h1>
+    </div>
+    <div class="row pb-4" style="border-bottom: 1px solid black;">
+        <div class="col-sm-6 text-center mt-4">
+            <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-indicators">
+                    <% for(let a in product.images){ %>   
+                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="<%=a%>" class="<%-a==0?'active':''%>" <%-a==0?'aria-current="true"':''%> aria-label="Slide <%=a%>"></button>
+                    <% } %> 
+                </div>
+                <div class="carousel-inner">
+                  <% for(let a in product.images){ %>   
+                    <div class="carousel-item <%-a==0?'active':'' %> " style="position:relative;height:30vmax;">
+                        <!-- <img src="/image/products/<%=product.images[a]%>" class="" style="position:absolute;width: 100%;" alt="..."/> -->
+                        <img class="img-fluid mb-4" src="/image/products/<%=product.images[a]%>" style="max-width: 80%;height: 30vmax; "/>
+                    </div>
+                  <%}%> 
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+        </div>
+
+        <div class="col-sm-6">
+          <div class="p-2 mt-3" style="font-size: 1.2rem;"><div class="fw-bold" >Product Description :-</div> <div class="mx-3"><%=product.description%></div></div>
+          <div class="d-flex justify-content-between mx-3 mt-3 pb-4 " style="border-bottom: 1px solid black;">
+            <h5 class="card-text p-2">Price: ₹<%= product.price %> </h5>
+            <form class="addc" style="display: inline !important;">
+              <button type="button" class="px-4 p-2 " onclick="fill('<%=product._id%>');" style="border-radius: 5px;border: 0px;font-size: 1.2rem;"><i class="fa fa-shopping-cart"></i> Add </button>
+            </form>
+          </div>
+          <div class="p-2 mt-3" style="font-size: 1.2rem;"> 
+            <div class="fw-bold" >Shop Information</div> 
+            <div class="d-flex justify-content-between mx-3 mt-3">
+              <div>Shop Name:</div><%=shop.shop %> 
+            </div>
+            <div class="d-flex justify-content-between mx-3">
+              <div>Mobile No:</div><%=shop.mobile %> 
+            </div>
+            <div class="d-flex justify-content-between mx-3">
+              <div>Email:</div><%=shop.email%> 
+            </div>
+          </div>   
+          <div class="text-center">
+            <button type="button" class="px-4 m-2 p-2" onclick="location.href='/shop/<%=shop._id%>'" style="border-radius: 5px;border: 0px;font-size: 1.2rem;">Go to Shop Page</button>
+          </div>       
+        </div>
+    </div>
+ 
+    <% if(products.length != 1) {%>  
+      <div class="pb-2 mb-4" style="border-bottom: 1px solid black;">
+        
+        <h2 id="featured-stores-heading" class="mt-4">Other Products from <%=shop.shop %> :</h2>
+        <div id="featured-stores" style="overflow: auto;width: 100%;">
+          <%for(let p of products){ if(!p._id.equals(product._id)){ %>
+            <div class="card mx-2 mb-2 text-center" style="display:inline-block;border-radius: 20px;min-width: 240px !important;">
+              <div onclick="location.href='/product/<%=p._id%>'" style="cursor:pointer;">
+                <h4 class="card-title" style="font-size: 105%; padding: 10px;"><%=p.name %></h4>
+                    
+                <div class="img text-center d-block" style="height: 140px;">
+                    <img src="/image/products/<%=p.images[0]%>" class="card-img-top p-2" style="width: 130px;height: 130px;" alt="Store Image"><br>
+                </div>
+              </div>
+              <div class="card-body" style="border-radius: 20%;">
+                <div class="d-flex justify-content-between align-items-center">
+                  <h5 class="card-text fw-bold text-end mx-1"> ₹<%= p.price %> </h5>
+                  <form class="addc" style="display: inline !important;">
+                    <button type="button" class="px-2" onclick="fill('<%=p._id%>');" style="border-radius: 10px;margin-top: -10px;border: 0px; padding: 5px;"><i class="fa fa-shopping-cart"></i> Add </button>
+                  </form>
+                </div>
+              
+              </div>
+              
+            </div>
+            <%}}%>
+          </div>
+            
+      </div>
+    <% } %> 
+
+    <h2 id="featured-stores-heading" class="mt-4">Other Similar Shops :</h2>
+    <div id="featured-stores" style="overflow: auto;width: 100%;">
+        <%let count=0; for(let agent of shops){ if(agent.category.includes(shop.category) && !(agent._id.equals(shop._id))){ count++; %>
+          <div class="card mx-2 mb-2" onclick="location.href='/shop/<%=agent._id%>'" style="display:inline-block;border-radius: 15px;min-width: 235px !important;cursor: pointer;">
+            <div class="img text-center d-block mt-2" style="height: 150px;">
+              <img src="/image/agents/<%=agent.photo %>" class="card-img-top p-2" style="width: 234px;height: 160px;" alt="Store Image"><br>
+            </div>
+            <div class="card-body d-flex justify-content-center align-items-center">
+              <h4 class="card-title text-center" style="font-size: 105%;"><%=agent.shop %></h4>
+            </div>                
+          </div>
+        <%}}%>  
+    </div>
+    
+    <%if(count == 0){ %>
+      <div class="card mb-3" style="border-radius: 15px;width: 100% !important; margin-top: -20px !important;">
+        <div class="d-flex align-items-center justify-content-center" style="width: 100%;height:200px !important;">
+          <span style="font-size: 4.2vh;display: inline-block;vertical-align: middle;line-height: normal;">
+            No other Shops available.
+          </span>
+        </div>
+      </div>        
+    <% } %>
+
+  </div>
+  
+  <input type="hidden" id="proId">
+  <input type="hidden" id="urla" value="<%=address%>">
+  <%- include('partials/footer') %> 
+  
+  <script>  
+    function fill(proId){
+      document.getElementById("proId").value=proId;
+    }
+  </script>
+  
+</body>
+</html>

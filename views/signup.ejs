@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+    <%- include('partials/head') %> 
+    <body style="background-color: white">
+        <%- include('partials_agent/navbar',{location:"signup"}) %>  
+        
+        <div class="row align-items-center mx-5 mt-5">            
+            <div class="col-sm-4 d-flex justify-content-center">
+                <img
+                  class="img-fluid"
+                  src="https://dukandaronline.com/images/features/innovative_dashboard.svg"
+                  style="max-width: 80%; height: auto"
+                />
+              </div>
+              
+            <div class="col-sm-7">
+                
+                <form class="px-4 py-3 form-sign1">
+                    <h1>Sign Up</h1>
+                    <br>
+                    <div class="mb-3 row">
+                        
+                        <div class="col-sm-5">
+                            <label class="form-label label">Name</label>
+                            <input type="text" class="form-control inp" required id="aname" name="Name" placeholder="Enter name">
+                        </div>
+                    
+                        <div class="col-sm-6">
+                            <label class="form-label label">Email Address</label>
+                            <input type="email" class="form-control inp" required id="aemail" name="Email" placeholder="Enter email">
+                        </div>
+
+                    </div>
+
+                    <div class="mb-3 mt-4 row">
+                        <div class="col-sm-5">
+                            <% const cate=["Automobile & Tyres","Books","Clothes","Computer Accessories","Cosmetics","Dairy","Decoration","Electronics","Fashin Accessories","Furniture","Gym Equipments","Media","Others"] %> 
+                            <label class="form-label" for="category">Select Category </label>
+                            <select name="category" id="acategory" required class="form-control inp" multiple size="5"> 
+                                
+                                <% for (var i = 0; i < cate.length; i++) { %>
+                                    <option value="<%=cate[i]%>"><%=cate[i]%></option>
+                                <% } %> 
+                                
+                            </select>
+                        </div>
+                        <div class="col-sm-6">
+                            <label class="form-label label mt-2">Shop Name</label>
+                            <input type="text" class="form-control inp" required id="ashop" name="shop" placeholder="Enter Shop name">
+                            <div class="mt-3">
+                                <label for="aphoto" class="mb-2"> Choose Shop Photo</label>
+                                <input type="file" accept="image/*" class="form-control inp" id="aphoto" name="aphoto">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3 mt-4 row">
+                        <label class="form-label label">Location</label>
+                        <div class="col-sm-5">
+                            <input type="text" class="form-control inp" required id="alocation1" name="location" placeholder="Address">
+                        </div>
+                        <div class="col-sm-2">
+                            <input type="text" class="form-control inp" required id="alocation2" name="location" placeholder="City">
+                        </div>
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control inp" required id="alocation3" name="location" placeholder="State">
+                        </div>
+                        <div class="col-sm-2">
+                            <input type="text" class="form-control inp" required id="alocation4" name="location" placeholder="Pincode">
+                        </div>  
+                    </div>
+                      
+                    <div class="mb-2 mt-4 row">
+                      
+                      <div class="col-sm-5">
+                        <label for="exampleDropdownFormPassword1" class="form-label label">Password</label>
+                        <input type="password" class="form-control inp" required id="apassword" name="Password" placeholder="Enter password">
+                      </div>
+                      
+                      <div class="col-sm-6 row">
+                        <div class="col-sm-6">
+                            <label class="form-label label mt-2">Mobile No</label>
+                            <input type="text" class="form-control inp" required id="amobile" name="mobile" placeholder="Enter mobile no">    
+                        </div>
+                        <div class="col-sm-5 text-center mt-3">
+                            <button class="form-control btn btn-outline-success">Sign Up</button>
+                        </div>
+                        
+                      </div>
+                    </div>
+
+                    <div class="mt-4 d-flex justify-content-left user-select-none ">
+                        Already a member? <a data-bs-target="#login" data-bs-toggle="modal" data-bs-dismiss="modal" class="mx-2" style="text-decoration: none; cursor: pointer;">Login</a><br>
+                    </div>
+                  </form>
+                  
+
+
+            </div>
+          </div>
+          
+    <footer>
+        <%- include('partials/footer') %>
+    </footer>   
+          
+    </body>
+</html>
